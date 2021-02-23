@@ -1,32 +1,52 @@
-import React from 'react';
-import user from './componentProfile/user.json';
-import Profile from './componentProfile/Profile';
+import React, { Component } from 'react';
 
-import statisticalData from './componentStatistics/statistical-data.json';
-import TitleStat from './componentStatistics/TitleStat';
-import Statistics from './componentStatistics/Statistics';
+import Section from './Component/Section/Section';
+import FeedbackOptions from './Component/FeedbackOptions/FeedbackOptions';
+import Statistics from './Component/Statistics/Statistics';
 
-import friends from './componentFriendList/friends.json';
-import FriendList from './componentFriendList/FriendList';
+class App extends Component {
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
 
-import transactions from './componentTransaction-history/transactions.json';
-import TransactionHistory from './componentTransaction-history/TransactionHistory';
+  onLeaveFeedback = event => {
+    if (event.target.innerHTML === 'Good') {
+      this.setState(prevState => ({
+        good: prevState.good + 1,
+      }));
+    } else if (event.target.innerHTML === 'Neutral') {
+      this.setState(prevState => ({
+        neutral: prevState.neutral + 1,
+      }));
+    } else if (event.target.innerHTML === 'Bad') {
+      this.setState(prevState => ({
+        bad: prevState.bad + 1,
+      }));
+    }
+  };
 
-export default function App() {
-  return (
-    <>
-      <Profile
-        name={user.name}
-        tag={user.tag}
-        location={user.location}
-        avatar={user.avatar}
-        stats={user.stats}
-      />
-      <TitleStat title="Upload stats">
-        <Statistics stats={statisticalData} />
-      </TitleStat>
-      <FriendList friends={friends} />
-      <TransactionHistory items={transactions} />;
-    </>
-  );
+  render() {
+    return (
+      <>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={this.state}
+            onLeaveFeedback={this.onLeaveFeedback}
+          />
+        </Section>
+        <Section title="Statistics">
+          <Statistics
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            total={5}
+            positivePercentage={12}
+          />
+        </Section>
+      </>
+    );
+  }
 }
+export default App;
