@@ -13,8 +13,8 @@ class App extends Component {
 
   onLeaveFeedback = event => {
     if (event.target.innerHTML === 'Good') {
-      this.setState(prevState => ({
-        good: prevState.good + 1,
+      this.setState(({ good }) => ({
+        good: good + 1,
       }));
     } else if (event.target.innerHTML === 'Neutral') {
       this.setState(prevState => ({
@@ -26,6 +26,11 @@ class App extends Component {
       }));
     }
   };
+
+  countTotalFeedback = () =>
+    this.state.good + this.state.neutral + this.state.bad;
+  countPositiveFeedbackPercentage = () =>
+    Math.round((this.state.good / this.countTotalFeedback()) * 100) + '%';
 
   render() {
     return (
@@ -41,8 +46,8 @@ class App extends Component {
             good={this.state.good}
             neutral={this.state.neutral}
             bad={this.state.bad}
-            total={5}
-            positivePercentage={12}
+            total={this.countTotalFeedback()}
+            positivePercentage={this.countPositiveFeedbackPercentage()}
           />
         </Section>
       </>

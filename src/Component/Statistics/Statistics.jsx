@@ -1,13 +1,16 @@
 import React from 'react';
+import useStyles from './StatisticsStyles';
 
 const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
+  const classes = useStyles();
+
   return (
     <>
-      <p>Good : {good}</p>
-      <p>Neutral : {neutral}</p>
-      <p>Bad : {bad}</p>
-      <p>Total : {total}</p>
-      <p>Positive feedback : {positivePercentage}</p>
+      <p className={classes.item}>Good : {good}</p>
+      <p className={classes.item}>Neutral : {neutral}</p>
+      <p className={classes.item}>Bad : {bad}</p>
+      <p className={classes.item}>Total : {total}</p>
+      <p className={classes.item}>Positive feedback : {positivePercentage}</p>
     </>
   );
 };
